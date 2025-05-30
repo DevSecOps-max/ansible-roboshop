@@ -1,0 +1,43 @@
+- name: configure catalogue component
+  hosts: catalogue
+  become: true
+  tasks:
+  - name: disable default modejs module
+    ansible.builtin.command: dnf module disable nodejs -y
+
+  - name: enable modejs:20 module
+    ansible.builtin.command: dnf module enable nodejs:20 -y
+  
+  - name: install modejs:20 module
+    ansible.builtin.package:
+      name: nodejs
+      state: present
+  - name: Create a roboshop system user
+    ansible.builtin.user:
+      name: roboshop
+      shell: /sbin/nologin
+      system: true
+      home: /app
+  
+  - name: create an app directory
+    ansible.builtin.file:
+      path: /app
+      state: directory
+
+  - name: Donwload Catalogue code
+    ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+      dest: /tmp/catalogue.zip
+
+  - name: Extract the catalogue code
+    ansible.builtin.unarchive:
+      src: /tmp/catalogue.zip
+      dest: /app
+
+
+
+  
+
+
+
+
