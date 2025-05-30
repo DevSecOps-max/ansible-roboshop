@@ -56,6 +56,24 @@
       state: started
       enabled: true
 
+  - name: copying mongodb repo
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: install mongodb client
+    ansible.builtin.package:
+      name: mongodb-mongosh
+      state: present
+
+  - name: check whether the products are loaded or not
+    ansible.builtin.command: mongosh --host mongodb.laddudevops.shop --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+    register: catalogue_output
+
+  - name: print catalogue output
+    ansible.builtin.debug:
+      msg: "{{ catalogue_output }}"
+
 
 
 
