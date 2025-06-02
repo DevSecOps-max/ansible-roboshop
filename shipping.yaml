@@ -33,6 +33,13 @@
       remote_src: true   # remote_src means the file is already available in the catalogue server
 
   - name: Install maven dependencies
-    ansible.builtin.command: maven clean package
+    ansible.builtin.command: mvn clean package
     args:
       chdir: /app
+
+  - name: Rename jar file
+    ansible.builtin.command: mv target/shipping-1.0.jar shipping.jar 
+    args:
+      chdir: /app
+
+
