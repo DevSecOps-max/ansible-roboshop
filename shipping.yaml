@@ -80,7 +80,7 @@
   #     login_host: mysql.laddudevops.shop
   #     login_db: cities
 
-  - name: Import data
+  - name: import data
     tags: 
     - import
     community.mysql.mysql_db:
