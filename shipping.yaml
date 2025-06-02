@@ -4,8 +4,11 @@
   tasks:
   - name: Install maven
     ansible.builtin.package:
-      name: maven
+      name: "{{ item }}"
       state: present
+    loop:
+    - PyMySQL
+    - maven
   
   - name: Create a roboshop system user
     ansible.builtin.user:
