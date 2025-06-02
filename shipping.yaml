@@ -2,14 +2,21 @@
   hosts: shipping
   become: true
   tasks:
-  - name: Install maven
+  - name: Install maven and mysql
     ansible.builtin.package:
-      name: maven
+      name: "{{ item }}"
       state: present
+    loop:
+    - maven
+    - mysql
 
   - name: Install PyMySQL 
     ansible.builtin.pip:
       name: PyMySQL
+      executable: pip3.9
+    loop:
+    - PyMySQL
+    - cryptography
   
   - name: Create a roboshop system user
     ansible.builtin.user:
